@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useContacts } from 'hooks/useContacts';
-import { nanoid } from 'nanoid';
 import { toast } from 'react-toastify';
 import styles from './ContactForm.module.css';
 
@@ -8,11 +7,11 @@ export function ContactForm() {
   const { contacts, addContact } = useContacts();
 
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [phone, setPhone] = useState('');
 
   function resetState() {
     setName('');
-    setNumber('');
+    setPhone('');
   }
 
   function handleInputChange(event) {
@@ -22,17 +21,16 @@ export function ContactForm() {
       setName(value);
     }
 
-    if (name === 'number') {
-      setNumber(value);
+    if (name === 'phone') {
+      setPhone(value);
     }
   }
 
   function handleSubmit(event) {
     event.preventDefault();
     const newContact = {
-      id: nanoid(),
       name,
-      number,
+      phone,
     };
 
     const alreadyInContacts = contacts.some(
@@ -70,9 +68,9 @@ export function ContactForm() {
         <input
           className={styles.Input}
           type="tel"
-          name="number"
+          name="phone"
           placeholder="number"
-          value={number}
+          value={phone}
           autoComplete="off"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
