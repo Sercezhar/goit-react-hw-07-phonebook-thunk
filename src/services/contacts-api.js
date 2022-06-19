@@ -8,11 +8,10 @@ export async function fetchContacts() {
 export async function addContact(values) {
   const response = await fetch(`${BASE_URL}/contacts`, {
     method: 'POST',
-    body: values,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(values),
   });
   return await response.json();
-  // const data = await response.json();
-  // console.log(values, data);
 }
 
 export async function deleteContact(id) {

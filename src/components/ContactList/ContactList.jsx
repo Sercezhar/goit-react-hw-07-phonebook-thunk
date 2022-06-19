@@ -1,13 +1,11 @@
 import PropTypes from 'prop-types';
-import { ContactListItem } from './ContactListItem';
 import { useContacts } from 'hooks/useContacts';
-import { toast } from 'react-toastify';
-
+import { ContactListItem } from './ContactListItem';
 import { useEffect } from 'react';
 import { getContacts } from 'redux/contactsOperations';
 
 export function ContactList() {
-  const { dispatch, contacts, filter, deleteContact } = useContacts();
+  const { dispatch, contacts, filter } = useContacts();
 
   const filteredContacts = contacts
     .filter(contact =>
@@ -15,26 +13,20 @@ export function ContactList() {
     )
     .sort((a, b) => a.name.localeCompare(b.name));
 
-  function handleDeleteContact(id, name) {
-    deleteContact(id);
-    toast.info(`${name.toUpperCase()} has been removed from contacts.`);
-  }
-
   useEffect(() => {
     dispatch(getContacts());
   }, [dispatch]);
 
   return (
-    <ul>
-      {filteredContacts.map(({ id, name, phone }) => (
-        <ContactListItem
-          key={id}
-          name={name}
-          number={phone}
-          onDeleteContact={() => handleDeleteContact(id, name)}
-        />
-      ))}
-    </ul>
+    <>
+      {contacts && (
+        <ul>
+          {filteredContacts.map(({ id, name, phone }) => (
+            <ContactListItem key={id} id={id} name={name} number={phone} />
+          ))}
+        </ul>
+      )}
+    </>
   );
 }
 

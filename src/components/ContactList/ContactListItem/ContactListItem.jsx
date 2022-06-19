@@ -1,8 +1,21 @@
 import PropTypes from 'prop-types';
-import styles from './ContactListItem.module.css';
+import { useContacts } from 'hooks/useContacts';
 import { MdDelete, MdPerson, MdPhone } from 'react-icons/md';
+import { toast } from 'react-toastify';
+import styles from './ContactListItem.module.css';
 
-export function ContactListItem({ name, number, onDeleteContact }) {
+export function ContactListItem({ id, name, number }) {
+  const { deleteContact } = useContacts();
+
+  async function handleDeleteContact(id, name) {
+    try {
+      await deleteContact(id);
+      toast.info(`${name.toUpperCase()} has been removed from contacts.`);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <li className={styles.Item}>
       <span className={styles.Contact}>
@@ -18,7 +31,7 @@ export function ContactListItem({ name, number, onDeleteContact }) {
       <button
         type="button"
         className={styles.DeleteBtn}
-        onClick={onDeleteContact}
+        onClick={() => handleDeleteContact(id, name)}
       >
         <MdDelete className={styles.Icon} />
       </button>
@@ -27,7 +40,7 @@ export function ContactListItem({ name, number, onDeleteContact }) {
 }
 
 ContactListItem.propTypes = {
+  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   number: PropTypes.string.isRequired,
-  onDeleteContact: PropTypes.func.isRequired,
 };

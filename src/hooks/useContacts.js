@@ -6,6 +6,7 @@ export function useContacts() {
   const dispatch = useDispatch();
   const contacts = useSelector(state => state.contacts.entities);
   const filter = useSelector(state => state.contacts.filter);
+  const status = useSelector(state => state.contacts.status);
 
   const handleAddContact = newContact => dispatch(addContact(newContact));
   const handleDeleteContact = id => dispatch(deleteContact(id));
@@ -15,6 +16,7 @@ export function useContacts() {
     dispatch,
     contacts,
     filter,
+    status,
     addContact: handleAddContact,
     deleteContact: handleDeleteContact,
     setFilter: handleSetFilter,

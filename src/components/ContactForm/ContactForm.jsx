@@ -26,7 +26,7 @@ export function ContactForm() {
     }
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     const newContact = {
       name,
@@ -37,11 +37,15 @@ export function ContactForm() {
       contact => contact.name.toLowerCase() === newContact.name.toLowerCase()
     );
 
-    if (alreadyInContacts) {
-      toast.error(`${newContact.name.toUpperCase()} is already in contacts.`);
-    } else {
-      addContact(newContact);
-      toast.success(`${newContact.name.toUpperCase()} is added to contacts.`);
+    try {
+      if (alreadyInContacts) {
+        toast.error(`${newContact.name.toUpperCase()} is already in contacts.`);
+      } else {
+        await addContact(newContact);
+        toast.success(`${newContact.name.toUpperCase()} is added to contacts.`);
+      }
+    } catch (error) {
+      console.log(error);
     }
 
     resetState();
