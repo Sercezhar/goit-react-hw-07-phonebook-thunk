@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useContacts } from 'hooks/useContacts';
 import { ContactListItem } from './ContactListItem';
 import { useEffect } from 'react';
-import { getContacts } from 'redux/contactsOperations';
+import { getContacts } from 'redux/contacts/contactsOperations';
 
 export function ContactList() {
   const { dispatch, contacts, filter } = useContacts();
